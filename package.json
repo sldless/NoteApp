@@ -1,0 +1,17 @@
+{
+  "name": "notes",
+  "version": "0.0.1",
+  "description": "A note application that includes a ToDo list",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js"
+  },
+  "author": "sldless",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^17.1.2",
+    "electron-pug": "^2.0.0",
+    "node-json-db": "^1.5.0",
+    "pug": "^3.0.2"
+  }
+}
