@@ -2,23 +2,23 @@ doctype html
 title Notes 
 link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
 link(rel='stylesheet', type='text/css', href='main.css')
+script(src='../js/popup.js')
 div(class='header')
   a(style='color: white')
     i(class='fa fa-sticky-note-o')  Notes
   dd(class='link')
    a(href='todomenu.html', class='link')
       i(class='fa fa-list-alt')  ToDo
-script(src='../js/popup.js')
 each note in locals
    a(href='note.html?id=${note.id}', class='clickablebox', class='link') e
 i(class='fa fa-plus-circle fa-lg',  style='color: green; margin-left: 155px; margin-top: 20px; font-size: 50px;', onclick='openPopup()')
 
 #Popup.form-popup
-  form.form-container()
+  form.form-container(action='/post', method='POST')
     label(for='Title')
       b Title
     input(type='text' placeholder='Enter a title' name='title' required id='title')
     label(for='note')
       b Content
     input(type='text' placeholder='Enter a note' name='note' required id='note')
-    button.btn(type='submit', onclick='closePopup(true)') Done 
+    button.btn(type='submit') Done 
