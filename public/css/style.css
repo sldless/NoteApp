@@ -18,12 +18,13 @@
   border: 2px solid #cccccc;
   border-radius: 4px;;
   margin-top: 10px;
+  margin-left: 16px;
   width: 350px;
   height: 40px;
   cursor: pointer;
 }
 
-
+/* Down code is from: https://www.w3schools.com/html/html_forms.asp */
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
   background-color: #555;
@@ -91,3 +92,4 @@
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+/* End of code from w3school */

@@ -1,10 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const setupPug = require('electron-pug');
-const { JsonDB } = require('node-json-db')
-const { Config } = require('node-json-db/dist/lib/JsonDBConfig')
-
-var db = new JsonDB(new Config("db", true, false, '/'));
-
+var fs = require('fs');
 const createWindow = async () => {
     // Create the browser window.
     const win = new BrowserWindow({
@@ -16,19 +12,22 @@ const createWindow = async () => {
             nodeIntegration: true
         }
     });
+    fs.readFile('db.json',function(err,content){
+      if(err) throw err;
+      let data = JSON.parse(content);
+      if (!data) {let notes = []; fs.writeFile('db.json',JSON.stringify(notes),function(err){if(err) throw err;});}
+      //data.push({'title': 3})
+      fs.writeFile('db.json',JSON.stringify(data),function(err){if(err) throw err;})});
     try {
-      db.getData('/' + process.env.COMPUTERNAME)
-    } catch (err) {
-      db.push('/' + process.env.COMPUTERNAME, { notes: [{'test': 'e'}] });
-    }
-    try {
-      let pug = await setupPug({pretty: true}, {notes: db.getData('/'+process.env.COMPUTERNAME)})
+       //fs.readFileSync('db.json', 'utf8')
+      let pug = await setupPug({pretty: true}, {Notes:  [{'id': 1, 'title': 'Note 1', 'content': 'Note 1 content'}, {'id': 2, 'title': 'Note 2', 'content': 'Note 2 content'}] });
       
       pug.on('error', err => console.error('electron-pug error', err))
     } catch (err) {
       console.error('electron-pug error', err)
     }
-    win.loadFile('html/notesmenu.pug');
+    win.loadURL('http://localhost:3000')
+    //win.loadFile('html/notesmenu.pug');
     }
 
 
