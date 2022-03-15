@@ -21,4 +21,5 @@ function closePopup() {
     notes.push({'note': note});
     db.push('/' + process.env.COMPUTERNAME, { notes: notes });
   }
+
 //https://www.w3schools.com/howto/howto_js_popup_form.asp
