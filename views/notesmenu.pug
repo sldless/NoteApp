@@ -10,49 +10,38 @@ script(src='main.js')
 div(class='header')
   a(style='color: white')
     i(class='fa fa-sticky-note-o')  Notes
-  dd(class='link')
-   a(href='todomenu.html', class='link')
-      i(class='fa fa-list-alt')  ToDo
-- var Notes = [{'id': 1, 'title': 'Note 1', 'content': 'Note 1 content'}, {'id': 2, 'title': 'Note 2', 'content': 'Note 2 content'}] 
-each note in Notes
-  a(class='clickablebox', class='link' data-toggle='modal' data-target='#infoModal', id='#{note.id}') #{note.title}
+each note in notes
+  a(class='clickablebox', class='link', data-toggle='modal' data-target='#infoModal', id='#{note.id}') #{note.title}
     #infoModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='infoModalTitle' aria-hidden='true')
       .modal-dialog.modal-dialog-centered(role='document') 
         .modal-content
           .modal-header
             h5#infoModalTitle.modal-title #{note.title}
             button.close(type='button' data-dismiss='modal' aria-label='Close') 
-              i(class='fa fa-times')
-           
+              i(class='fa fa-times')     
           .modal-body
             | #{note.content}
           .modal-footer
-            button.btn.btn-danger(type='button', style='margin-right: 52%;' id='DeleteButton') Delete 
+            button.btn.btn-danger(type='button', onclick='deleteNote(#{note.id})') Delete
               i(class='fa fa-trash')
-            script.
-              function deleteItem(array, id) {
-                var index = array.findIndex(x => x.id == id);
-                array.splice(index, 1);
-                localStorage.setItem('notes', JSON.stringify(array));
-                location.reload();
-              }
-              document.getElementById("DeleteButton").addEventListener("click", function() {
-                deleteItem((Notes, #{note.id});)
-              });
-                
             button.btn.btn-info(type='button', id='Editbutton') Edit  
               i(class='fa fa-pencil')
         //Credits: https://getbootstrap.com/docs/4.0/components/modal/
 
-i(class='fa fa-plus-circle fa-lg',  style='color: green; margin-left: 155px; margin-top: 20px; font-size: 50px;', onclick='openPopup()')
-
-#Popup.form-popup
-  form.form-container(action='/post', method='POST')
-    label(for='Title')
-      b Title
-    input(type='text' placeholder='Enter a title' name='title' required id='title')
-    label(for='note')
-      b Content
-    input(type='text' placeholder='Enter a note' name='note' required id='note')
-    button.btn(type='submit') Done 
-
+i(class='fa fa-plus-circle fa-lg',  style='margin-left: 155px; margin-top: 20px; font-size: 50px;', data-toggle='modal' data-target='#NotesModal')
+#NotesModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='NotesModalLabal' aria-hidden='true')
+  form(id='NotesForm', action='/post', method='POST')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#NotesModalLabal.modal-title New Note
+          button.close(type='button' data-dismiss='modal' aria-label='Close') 
+            i(class='fa fa-times')
+        .modal-body
+          .md-form
+            input#title.form-control(type='text', name='title', placeholder='Title', required)
+            textarea#form8.md-textarea.form-control(type='text', style='margin-top: 5%;', rows='4', placeholder='Content', name='content', required)
+        .modal-footer
+          button.btn.btn-danger(type='button' data-dismiss='modal') Cancel
+          button.btn.btn-primary(type='submit') Save
+          
