@@ -22,14 +22,16 @@ each note in notes
         .modal-body
           | #{note.content}
         .modal-footer
-          button.btn.btn-danger(type='button', onclick='deleteNote()') Delete
+          button.btn.btn-danger(type='button', onclick='deleteNote()', data-dismiss='modal') Delete
           script.
               function deleteNote() {
                 const request = new XMLHttpRequest();
-                request.open('DELETE', '/notes');
-                request.send(JSON.stringify({id: '#{note.id}'}));
+                request.open('DELETE', '/notes/', true);
+                request.setRequestHeader('id', '#{note.id}');
+                request.send();
+                location.reload();
               }
-          button.btn.btn-info(type='button', id='Editbutton') Edit  
+          //button.btn.btn-info(type='button', id='Editbutton') Edit  
               i(class='fa fa-pencil')
         //Credit: httpis://getbootstrap.com/docs/4.0/components/modal/
 

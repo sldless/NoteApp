@@ -32,14 +32,13 @@ app.get('/', function(_req, res) {
     });
 });
 app.use('/notes', function(req, res) {
-    console.log(req.body);
-    console.log(req.params)
     if (req.method === 'POST') {
         db.run('INSERT INTO notes (id, title, content) VALUES (?, ?, ?)', [Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 9), req.body.title, req.body.content]);
     }
     if (req.method === 'DELETE') {
-        db.run('DELETE FROM notes WHERE id = ?', [req.params.id]);
-        return res.sendStatus(200);
+        db.run('DELETE FROM notes WHERE id = ?', [req.headers.id]);
+        res.sendStatus(200);
+        return res.end()
     }
     if (req.method === 'PUT') {
         db.run('UPDATE notes SET title = ?, content = ? WHERE id = ?', [req.body.title, req.body.content, req.params.id]);
