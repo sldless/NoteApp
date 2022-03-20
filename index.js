@@ -1,6 +1,5 @@
 const { app, BrowserWindow } = require('electron');
 const setupPug = require('electron-pug');
-var fs = require('fs');
 const createWindow = async () => {
   const win = new BrowserWindow({
     width: 400,

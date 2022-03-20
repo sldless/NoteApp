@@ -17,14 +17,8 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(express.static(path.join(__dirname, "public/css")));
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-app.post('/post', function (req, res) {
-    db.run('INSERT INTO notes (id, title, content) VALUES (?, ?, ?)', [Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 9), req.body.title, req.body.content]);
-    res.redirect('/');
-});
 
 app.get('/', function(_req, res) {
     db.all('SELECT * FROM notes', function(err, rows) {
@@ -37,12 +31,20 @@ app.get('/', function(_req, res) {
         });
     });
 });
-app.get('/delete/:id', function(req, res) {
-    db.run('DELETE FROM notes WHERE id = ?', [req.params.id]);
-    res.redirect('/');
-});
-app.post('/edit/:id', function(req, res) {
-    db.run('UPDATE notes SET title = ?, content = ? WHERE id = ?', [req.body.title, req.body.content, req.params.id]);
+app.use('/notes', function(req, res) {
+    console.log(req.body);
+    console.log(req.params)
+    if (req.method === 'POST') {
+        db.run('INSERT INTO notes (id, title, content) VALUES (?, ?, ?)', [Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 9), req.body.title, req.body.content]);
+    }
+    if (req.method === 'DELETE') {
+        db.run('DELETE FROM notes WHERE id = ?', [req.params.id]);
+        return res.sendStatus(200);
+    }
+    if (req.method === 'PUT') {
+        db.run('UPDATE notes SET title = ?, content = ? WHERE id = ?', [req.body.title, req.body.content, req.params.id]);
+
+    }
     res.redirect('/');
 });
 app.listen(7829, function(){ 
