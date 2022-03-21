@@ -1,5 +1,11 @@
-To start the app/server, run: 
+##Installation
 
-``$ npm start``
+To install the needed packages:
+```javascript
+npm install package.json
+```
+To run it:
+```javascript
+npm start
+```
 
-Error: Modal shows the same content 
