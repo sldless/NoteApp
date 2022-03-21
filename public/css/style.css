@@ -5,7 +5,7 @@
     display: inline-block;
   }
 .header {
-  background-color: #333;
+  background-color: rgb(85, 131, 190);
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   padding: 20px;
@@ -14,9 +14,9 @@
 }
 .clickablebox {
   display: inline-block;
-  padding: 10px;
+  padding: auto;
   border: 2px solid #cccccc;
-  border-radius: 4px;;
+  border-radius: 4px;
   margin-top: 10px;
   margin-left: 16px;
   width: 350px;
