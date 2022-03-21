@@ -42,7 +42,6 @@ app.use('/notes', function(req, res) {
     }
     if (req.method === 'PUT') {
         db.run('UPDATE notes SET title = ?, content = ? WHERE id = ?', [req.body.title, req.body.content, req.params.id]);
-
     }
     res.redirect('/');
 });
